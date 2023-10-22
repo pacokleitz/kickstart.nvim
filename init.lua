@@ -43,6 +43,7 @@ require('lazy').setup({
       -- Automatically install LSPs to stdpath for neovim
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
+      'WhoIsSethDaniel/mason-tool-installer.nvim',
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
@@ -228,7 +229,7 @@ require('lazy').setup({
         python = { 'pylint' },
         bash = { 'shellcheck' },
         terraform = { 'tfsec' },
-        go = { 'gloangcilint' },
+        go = { 'golangcilint' },
         dockerfile = { 'hadolint' },
         markdown = { 'markdownlint' },
         yaml = { 'yamllint' },
@@ -533,7 +534,8 @@ local servers = {
   rust_analyzer = {},
   tsserver = {},
   html = { filetypes = { 'html', 'twig', 'hbs' } },
-
+  tailwindcss = {},
+  svelte = {},
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
@@ -554,6 +556,7 @@ local mason_lspconfig = require 'mason-lspconfig'
 
 mason_lspconfig.setup {
   ensure_installed = vim.tbl_keys(servers),
+  automatic_installation = true,
 }
 
 mason_lspconfig.setup_handlers {
@@ -565,6 +568,27 @@ mason_lspconfig.setup_handlers {
       filetypes = (servers[server_name] or {}).filetypes,
     }
   end,
+}
+
+--- Ensure formatters and linters are installed
+local mason_tool_installer = require 'mason-tool-installer'
+
+mason_tool_installer.setup {
+  ensure_installed = {
+    'prettier',
+    'stylua',
+    'isort',
+    'black',
+    'pylint',
+    'eslint_d',
+    'shellcheck',
+    'shfmt',
+    'tfsec',
+    'golangci-lint',
+    'yamllint',
+    'hadolint',
+    'markdownlint',
+  },
 }
 
 -- [[ Configure nvim-cmp ]]
