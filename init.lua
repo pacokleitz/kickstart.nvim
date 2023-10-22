@@ -198,9 +198,18 @@ require('lazy').setup({
         lua = { 'stylua' },
         python = { 'isort', 'black' },
         javascript = { { 'prettierd', 'prettier' } },
+        typescript = { { 'prettierd', 'prettier' } },
+        javascriptreact = { { 'prettierd', 'prettier' } },
+        typescriptreact = { { 'prettierd', 'prettier' } },
+        svelte = { { 'prettierd', 'prettier' } },
+        css = { { 'prettierd', 'prettier' } },
+        html = { { 'prettierd', 'prettier' } },
+        markdown = { { 'prettierd', 'prettier' } },
+        json = { { 'prettierd', 'prettier' } },
         terraform = { 'terraform-fmt' },
         yaml = { 'yamlfmt' },
         bash = { 'shfmt' },
+        go = { 'gofmt' },
       },
       -- Set up format-on-save
       format_on_save = { timeout_ms = 500, lsp_fallback = true },
@@ -233,6 +242,8 @@ require('lazy').setup({
         dockerfile = { 'hadolint' },
         markdown = { 'markdownlint' },
         yaml = { 'yamllint' },
+        ansible = { 'ansible_lint' },
+        json = { 'jsonlint' },
       }
 
       local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })
@@ -576,6 +587,7 @@ local mason_tool_installer = require 'mason-tool-installer'
 mason_tool_installer.setup {
   ensure_installed = {
     'prettier',
+    'prettierd',
     'stylua',
     'isort',
     'black',
@@ -588,6 +600,8 @@ mason_tool_installer.setup {
     'yamllint',
     'hadolint',
     'markdownlint',
+    'ansible-lint',
+    'jsonlint',
   },
 }
 
